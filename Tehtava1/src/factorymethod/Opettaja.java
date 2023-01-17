@@ -1,8 +1,7 @@
 package factorymethod;
 
 public class Opettaja extends AterioivaOtus {
-
-    public Juoma createJuoma(){
+    public Juoma createJuoma() {
         return new Vesi();
     }
 
