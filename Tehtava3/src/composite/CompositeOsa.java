@@ -25,10 +25,11 @@ public class CompositeOsa implements Laiteosa {
     }
 
     public int getHinta() {
+        int kokoHinta = hinta;
         for (Laiteosa osa : osat) {
-            hinta += osa.getHinta();
+            kokoHinta += osa.getHinta();
         }
-        return hinta;
+        return kokoHinta;
     }
 
     public String getNimi() {
