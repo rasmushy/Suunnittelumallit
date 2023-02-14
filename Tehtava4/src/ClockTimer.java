@@ -1,4 +1,6 @@
-public class ClockTimer extends Subject  {
+import java.util.Observable;
+
+public class ClockTimer extends Observable implements Runnable {
     private int hour;
     private int minute;
     private int second;
@@ -9,16 +11,21 @@ public class ClockTimer extends Subject  {
         second = 0;
     }
 
-    public int getHour() {
-        return hour;
-    }
+    @Override
+    public void run() {
+        boolean running = true;
+        while (running) {
+            tick();
+            if (second == 10) {
+                running = false;
+            }
 
-    public int getMinute() {
-        return minute;
-    }
-
-    public int getSecond() {
-        return second;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void tick() {
@@ -34,7 +41,14 @@ public class ClockTimer extends Subject  {
                 }
             }
         }
-        notifyObservers();
+
+        setChanged();
+        notifyObservers(this);
+    }
+
+    @Override
+    public String toString() {
+        return hour + ":" + minute + ":" + second;
     }
 }
 
