@@ -1,31 +1,39 @@
 public class CharmanderState extends State {
-    private int hp;
-    private final int requiredXp = 50;
 
-    public CharmanderState(Pokemon pokemon) {
-        super(pokemon);
-        this.hp = 39;
+    private static State instance = new CharmanderState();
+    private static final int initialHp = 39;
+    private static final int requiredXp = 50;
+
+    private CharmanderState() {
     }
 
+    public static State getInstance() {
+        return instance;
+    }
     @Override
     public void attack() {
         System.out.println("Charmander used Ember!");
     }
 
     @Override
-    public Pokemon evolve() {
+    public void evolve(Pokemon pokemon) {
         System.out.println("Charmander evolved into Charmeleon!");
-        this.pokemon.changeState(new CharmeleonState(this.pokemon));
-        return this.pokemon;
+        changeState(pokemon, CharmeleonState.getInstance());
     }
 
     @Override
     public void takeDamage(int damage) {
-        this.hp -= damage;
         System.out.println("Charmander took " + damage + " damage!");
-        if (this.hp <= 0) {
-            System.out.println("Charmander fainted!");
-        }
+    }
+
+    @Override
+    public int getInitialHp() {
+        return initialHp;
+    }
+
+    @Override
+    public int getRequiredXp() {
+        return requiredXp;
     }
 
     @Override
@@ -33,7 +41,4 @@ public class CharmanderState extends State {
         return "Charmander";
     }
 
-    public int getRequiredXp() {
-        return requiredXp;
-    }
 }

@@ -1,39 +1,43 @@
 public class Pokemon {
+
     private State state;
+    private int hp;
     private int xp;
 
+    private final int maximumXp = 160;
+
     public Pokemon() {
-        this.state = new CharmanderState(this);
+        this.state = CharmanderState.getInstance();
+        this.hp = state.getInitialHp();
         this.xp = 0;
     }
 
     public void evolve() {
-        this.state.evolve();
+        if (xp > maximumXp) {
+            return;
+        }
+        this.state.evolve(this);
     }
 
     public void attack() {
         this.state.attack();
-        addXp(10);
+        xp += 10;
+        if (xp >= state.getRequiredXp()) {
+            evolve();
+        }
     }
 
     public void takeDamage(int damage) {
         this.state.takeDamage(damage);
+        hp -= damage;
+        if (hp <= 0) {
+            System.out.println(this.state.toString() + " fainted!");
+        }
     }
 
     public void changeState(State state) {
         this.state = state;
-    }
-
-    public void addXp(int xp) {
-        this.xp += xp;
-        int left = this.state.getRequiredXp() - this.xp;
-        if (left > 0) {
-            System.out.println(this.state.toString() + " gained 10 xp! " + left + " xp required to evolve.");
-        }
-
-        if (this.xp >= this.state.getRequiredXp()) {
-            this.evolve();
-        }
+        hp = state.getInitialHp();
     }
 
 }

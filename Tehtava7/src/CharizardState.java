@@ -1,10 +1,14 @@
 public class CharizardState extends State {
-    private int hp;
-    private final int requiredXp = 150;
 
-    public CharizardState(Pokemon pokemon) {
-        super(pokemon);
-        this.hp = 78;
+    private static State instance = new CharizardState();
+    private static final int initialHp = 78;
+    private static final int requiredXp = 150;
+
+    private CharizardState() {
+    }
+
+    public static State getInstance() {
+        return instance;
     }
 
     @Override
@@ -13,27 +17,27 @@ public class CharizardState extends State {
     }
 
     @Override
-    public Pokemon evolve() {
+    public void evolve(Pokemon pokemon) {
         System.out.println("Charizard is already at its highest evolution!");
-        return this.pokemon;
     }
 
     @Override
     public void takeDamage(int damage) {
-        this.hp -= damage;
         System.out.println("Charizard took " + damage + " damage!");
-        if (this.hp <= 0) {
-            System.out.println("Charizard fainted!");
-        }
     }
 
     @Override
-    public String toString() {
-        return "Charizard";
+    public int getInitialHp() {
+        return initialHp;
     }
 
     @Override
     public int getRequiredXp() {
         return requiredXp;
+    }
+
+    @Override
+    public String toString() {
+        return "Charizard";
     }
 }

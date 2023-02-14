@@ -1,15 +1,15 @@
 public abstract class State {
-    protected Pokemon pokemon;
 
-    public State(Pokemon pokemon) {
-        this.pokemon = pokemon;
+    public void changeState(Pokemon pokemon, State state) {
+        pokemon.changeState(state);
     }
 
     public abstract void attack();
-
-    public abstract Pokemon evolve();
+    public abstract void evolve(Pokemon pokemon);
 
     public abstract void takeDamage(int damage);
+
+    public abstract int getInitialHp();
 
     public abstract int getRequiredXp();
 }
