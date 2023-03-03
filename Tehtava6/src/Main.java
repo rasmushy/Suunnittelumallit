@@ -10,13 +10,11 @@ public class Main {
      */
     public static void main(String[] args) {
         Map<String, String> rasmusData = new HashMap<String, String>();
-        Map<String, String> suojaamatonData = new HashMap<String, String>();
 
         rasmusData.put("nimi", "Rasmus");
-        suojaamatonData.put("nimi", "Rasmus");
 
         IDataPaasy data = new Dekoraattori(new DataRakenne(rasmusData));
-        IDataPaasy data2 = new DataRakenne(suojaamatonData);
+        IDataPaasy data2 = new DataRakenne(rasmusData);
 
         System.out.println("suojattuData: " + data.hae());
 
